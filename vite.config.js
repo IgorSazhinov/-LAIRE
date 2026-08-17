@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
+import { defineConfig } from "vite";
+import apiMiddleware from "./server.js";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [apiMiddleware()],
+  server: {
+    port: 3000,
+  },
+  root: ".",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+  },
+});
