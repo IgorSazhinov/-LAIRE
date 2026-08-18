@@ -1,3 +1,8 @@
+import CategoryItem from './CategoryItem'
+
+/**
+ * Компонент сайдбара со списком категорий
+ */
 export default function Sidebar({
   categories,
   currentCategoryId,
@@ -9,21 +14,13 @@ export default function Sidebar({
         <button className="back-button">←</button>
         <span className="categories-title">Категории</span>
       </div>
-
       {categories.map((category) => (
-        <div
+        <CategoryItem
           key={category.id}
-          className={`category-item ${
-            category.id === currentCategoryId ? "active" : ""
-          }`}
-          data-id={category.id}
+          category={category}
+          isActive={category.id === currentCategoryId}
           onClick={() => onCategoryClick(category.id)}
-        >
-          <span className="cat-name">{category.name}</span>
-          <div className="count-badge">
-            <span>{category.servicesCount}</span>
-          </div>
-        </div>
+        />
       ))}
     </aside>
   );

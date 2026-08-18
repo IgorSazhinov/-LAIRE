@@ -96,17 +96,14 @@ function App() {
   return (
     <div className="page">
       <Header />
-
       <main className="main-booking-flow">
         <Sidebar
           categories={categories}
           currentCategoryId={currentCategoryId}
           onCategoryClick={handleCategoryClick}
         />
-
         <ServicesList services={services} loading={loading} />
       </main>
-
       <Footer />
     </div>
   );

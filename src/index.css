@@ -115,6 +115,7 @@ body {
   background: #ffffff;
   border: 1px solid #ede8e1;
   border-radius: 12px;
+  cursor: pointer;
 }
 
 .category-item.active {
