@@ -334,12 +334,15 @@ export default function apiMiddleware() {
 
           try {
             const services = getServicesByCategory(categoryId);
-            res.setHeader("Content-Type", "application/json");
-            res.statusCode = 200;
-            res.end(JSON.stringify(services));
-            console.log(
-              `Отправлены услуги для категории ${categoryId}: ${services.length}`
-            );
+            // имитация задержки получения данных по услугам
+            setTimeout(() => {
+              res.setHeader("Content-Type", "application/json");
+              res.statusCode = 200;
+              res.end(JSON.stringify(services));
+              console.log(
+                `Отправлены услуги для категории ${categoryId}: ${services.length}`
+              );
+            }, 1000);
           } catch (error) {
             res.statusCode = 404;
             res.end(JSON.stringify({ error: error.message }));

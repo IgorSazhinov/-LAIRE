@@ -69,30 +69,31 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderCategories(activeCategoryId) {
     // Находим заголовок с кнопкой "Назад"
     const titleWithBack = sidebar.querySelector(".title-with-back");
+
     // Удаляем все старые категории (они прямые потомки sidebar)
     const oldCategories = sidebar.querySelectorAll(".category-item");
     oldCategories.forEach((item) => item.remove());
 
-    // Создаем и вставляем новые категории
+    // Собираем HTML всех категорий
+    let html = "";
+    // Создаем новые категории
     categories.forEach((category) => {
       // Определяем, активна ли категория
       const isActive = category.id === activeCategoryId ? "active" : "";
       const count = category.servicesCount || 0;
-
+      
       // Создаем DOM элемент категории
-      const categoryDiv = document.createElement("div");
-      categoryDiv.className = `category-item ${isActive}`;
-      categoryDiv.dataset.id = category.id;
-      categoryDiv.innerHTML = `
-        <span class="cat-name">${category.name}</span>
-        <div class="count-badge"><span>${count}</span></div>
+      html += `
+        <div class="category-item ${isActive}" data-id="${category.id}">
+          <span class="cat-name">${category.name}</span>
+          <div class="count-badge"><span>${count}</span></div>
+        </div>
       `;
-
-      // Вставляем после заголовка (сохраняя порядок)
-      titleWithBack.insertAdjacentElement("afterend", categoryDiv);
     });
 
-    // Навешиваем обработчики на новые категории
+    // Вставляем все категории одной операцией
+    titleWithBack.insertAdjacentHTML("afterend", html);
+
     setupCategoryListeners();
   }
 
@@ -146,8 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="meta">
               <span class="duration">${service.duration} мин</span>
               <span class="price">${formattedPrice}</span>
-              <button class="select-btn"><span>Выбрать</span></button>
             </div>
+            <button class="select-btn"><span>Выбрать</span></button>
           </div>
         `;
       });
@@ -182,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Показываем индикатор загрузки
     servicesContainer.innerHTML = `
         <div style="text-align: center; padding: 40px; color: #6B6661; font-size: 16px;">
-          Загрузка услуг...
+          Загрузка актуальных услуг...
         </div>
       `;
 

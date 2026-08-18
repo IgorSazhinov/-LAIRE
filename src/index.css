@@ -73,6 +73,7 @@ body {
   padding: 48px 56px 80px;
   gap: 40px;
   overflow: hidden;
+  flex: 1; /* футер не будет подниматься, если контента мало */
 }
 
 .sidebar {
