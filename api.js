@@ -34,7 +34,7 @@
  * 3. Парсит JSON ответ и возвращает данные
  * 4. В случае ошибки логирует её в консоль и пробрасывает дальше
  */
-async function fetchCategories() {
+export async function fetchCategories() {
   try {
     const response = await fetch("/api/categories");
     if (!response.ok) {
@@ -80,7 +80,7 @@ async function fetchCategories() {
  *
  * @see {@link fetchCategories} Для получения списка всех категорий
  */
-async function fetchServicesByCategory(categoryId) {
+export async function fetchServicesByCategory(categoryId) {
   try {
     const response = await fetch(`/api/categories/${categoryId}/services`);
     if (!response.ok) {
