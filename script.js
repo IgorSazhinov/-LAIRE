@@ -1,3 +1,7 @@
+/**
+ * Массив с данными категорий и услуг.
+ * TODO Позже эти данные будут приходить с backend.
+ */
 const servicesData = [
   {
     name: "Стрижки и укладки",
@@ -148,11 +152,16 @@ const servicesData = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Боковая панель для отображения категорий.
   const sidebar = document.querySelector(".sidebar");
+  // Контейнер для отображения списка услуг выбранной категории.
   const servicesContainer = document.getElementById("servicesContainer");
 
+  /**
+   * Отрисовывает список категорий в боковой панели (`sidebar`).
+   * Первая категория автоматически получает класс активности `active`.
+   */
   function renderCategories() {
-
     servicesData.forEach((category, index) => {
       const activeClass = index === 0 ? "active" : "";
       const count = category.services.length;
@@ -166,6 +175,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  /**
+   * Отрисовывает список услуг конкретной категории в контейнере `servicesContainer`.
+   * Если категория пуста или не существует, выводит заглушку с текстом.
+   */
   function renderServices(categoryIndex) {
     const category = servicesData[categoryIndex];
 
@@ -200,6 +213,10 @@ document.addEventListener("DOMContentLoaded", function () {
     servicesContainer.innerHTML = html;
   }
 
+  /**
+   * Находит все элементы категорий в боковой панели и вешает на них обработчик клика.
+   * При клике переключает класс `active` и обновляет список услуг.
+   */
   function setupCategoryListeners() {
     const categoryItems = sidebar.querySelectorAll(".category-item");
 
@@ -207,12 +224,15 @@ document.addEventListener("DOMContentLoaded", function () {
       item.addEventListener("click", function () {
         categoryItems.forEach((cat) => cat.classList.remove("active"));
         item.classList.add("active");
-        // const index = parseInt(item.dataset.index);
         renderServices(index);
       });
     });
   }
 
+  /**
+   * Инициализирует модуль: рендерит категории, выводит услуги первой категории
+   * и настраивает слушатели событий.
+   */
   function init() {
     renderCategories();
     renderServices(0);
