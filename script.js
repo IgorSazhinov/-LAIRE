@@ -159,16 +159,24 @@ function renderCategories() {
   const sidebar = document.querySelector(".sidebar");
 
   SERVICES_DATA.forEach((category, index) => {
-    const activeClass = index === 0 ? "active" : "";
-    const count = category.services.length;
-    const categoryDiv = document.createElement("div");
-    categoryDiv.className = `category-item ${activeClass}`;
-    categoryDiv.innerHTML = `
-          <span class="cat-name">${category.name}</span>
-          <div class="count-badge"><span>${count}</span></div>
-      `;
+    const categoryDiv = renderCategoryItem(category, index === 0);
     sidebar.appendChild(categoryDiv);
   });
+}
+
+/**
+ * Отрисовка плашки с категорией
+ */
+function renderCategoryItem(category, isActive) {
+  const activeClass = isActive ? "active" : "";
+  const count = category.services.length;
+  const categoryDiv = document.createElement("div");
+  categoryDiv.className = `category-item ${activeClass}`;
+  categoryDiv.innerHTML = `
+    <span class="cat-name">${category.name}</span>
+    <div class="count-badge"><span>${count}</span></div>
+  `;
+  return categoryDiv;
 }
 
 /**
@@ -192,24 +200,30 @@ function renderServices(categoryIndex) {
 
   let html = "";
   category.services.forEach((service) => {
-    const formattedPrice = service.price.toLocaleString("ru-RU") + " ₽";
-
-    html += `
-          <div class="service-row" data-service="${service.id}">
-            <div class="info">
-              <span class="title">${service.title}</span>
-              <span class="desc">${service.desc}</span>
-            </div>
-            <div class="meta">
-              <span class="duration">${service.duration} мин</span>
-              <span class="price">${formattedPrice}</span>
-            </div>
-            <button class="select-btn"><span>Выбрать</span></button>
-          </div>
-        `;
+    html += renderServiceItem(service);
   });
 
   servicesContainer.innerHTML = html;
+}
+
+/**
+ * Отрисовка плашки с услугой
+ */
+function renderServiceItem(service) {
+  const formattedPrice = service.price.toLocaleString("ru-RU") + " ₽";
+  return `
+    <div class="service-row" data-service="${service.id}">
+      <div class="info">
+        <span class="title">${service.title}</span>
+        <span class="desc">${service.desc}</span>
+      </div>
+      <div class="meta">
+        <span class="duration">${service.duration} мин</span>
+        <span class="price">${formattedPrice}</span>
+      </div>
+      <button class="select-btn"><span>Выбрать</span></button>
+    </div>
+  `;
 }
 
 /**
