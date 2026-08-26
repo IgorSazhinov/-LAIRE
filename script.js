@@ -159,7 +159,7 @@ function renderCategories() {
   const sidebar = document.querySelector(".sidebar");
 
   SERVICES_DATA.forEach((category, index) => {
-    const categoryDiv = renderCategoryItem(category, index === 0);
+    const categoryDiv = renderCategoryItem(category, index, index === 0);
     sidebar.appendChild(categoryDiv);
   });
 }
@@ -167,11 +167,12 @@ function renderCategories() {
 /**
  * Отрисовка плашки с категорией
  */
-function renderCategoryItem(category, isActive) {
+function renderCategoryItem(category, index, isActive) {
   const activeClass = isActive ? "active" : "";
   const count = category.services.length;
   const categoryDiv = document.createElement("div");
   categoryDiv.className = `category-item ${activeClass}`;
+  categoryDiv.dataset.index = index;
   categoryDiv.innerHTML = `
     <span class="cat-name">${category.name}</span>
     <div class="count-badge"><span>${count}</span></div>
@@ -233,19 +234,24 @@ function setupCategoryListeners() {
   const sidebar = document.querySelector(".sidebar");
   const categoryItems = sidebar.querySelectorAll(".category-item");
 
-  categoryItems.forEach((item, index) => {
-    item.addEventListener("click", function () {
-      // Убираем выбор со всех категорий
-      categoryItems.forEach((cat) => {
-        cat.classList.remove("active");
-      });
-
-      // Выбираем ту, на которую кликнули
-      item.classList.add("active");
-
-      // Отображаем список услуг
-      renderServices(index);
+  function onCategoryItemClick(event) {
+    // Убираем выбор со всех категорий
+    categoryItems.forEach((cat) => {
+      cat.classList.remove("active");
     });
+
+    const clickedItem = event.currentTarget;
+    const index = clickedItem.dataset.index;
+
+    // Выбираем ту, на которую кликнули
+    clickedItem.classList.add("active");
+
+    // Отображаем список услуг
+    renderServices(index);
+  }
+
+  categoryItems.forEach((item) => {
+    item.addEventListener("click", onCategoryItemClick);
   });
 }
 
