@@ -1,8 +1,8 @@
 /**
  * Массив с данными категорий и услуг.
- * TODO Позже эти данные будут приходить с backend.
+ * TODO: Позже эти данные будут приходить с backend.
  */
-const servicesData = [
+const SERVICES_DATA = [
   {
     name: "Стрижки и укладки",
     services: [
@@ -151,93 +151,92 @@ const servicesData = [
   },
 ];
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Боковая панель для отображения категорий.
+/**
+ * Отрисовывает список категорий в боковой панели.
+ * Первая категория становится активной.
+ */
+function renderCategories() {
   const sidebar = document.querySelector(".sidebar");
-  // Контейнер для отображения списка услуг выбранной категории.
+
+  SERVICES_DATA.forEach((category, index) => {
+    const activeClass = index === 0 ? "active" : "";
+    const count = category.services.length;
+    const categoryDiv = document.createElement("div");
+    categoryDiv.className = `category-item ${activeClass}`;
+    categoryDiv.innerHTML = `
+          <span class="cat-name">${category.name}</span>
+          <div class="count-badge"><span>${count}</span></div>
+      `;
+    sidebar.appendChild(categoryDiv);
+  });
+}
+
+/**
+ * Отрисовывает список услуг конкретной категории в servicesContainer.
+ * Если категория пуста или не существует, выводит заглушку с текстом.
+ * @param {number} categoryIndex Индекс категории в объекте servicesData.
+ */
+function renderServices(categoryIndex) {
   const servicesContainer = document.getElementById("servicesContainer");
 
-  /**
-   * Отрисовывает список категорий в боковой панели (`sidebar`).
-   * Первая категория автоматически получает класс активности `active`.
-   */
-  function renderCategories() {
-    servicesData.forEach((category, index) => {
-      const activeClass = index === 0 ? "active" : "";
-      const count = category.services.length;
-      const categoryDiv = document.createElement("div");
-      categoryDiv.className = `category-item ${activeClass}`;
-      categoryDiv.innerHTML = `
-            <span class="cat-name">${category.name}</span>
-            <div class="count-badge"><span>${count}</span></div>
+  const category = SERVICES_DATA[categoryIndex];
+
+  if (!category || !category.services || category.services.length === 0) {
+    servicesContainer.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: #6B6661; font-size: 16px;">
+            В этой категории пока нет услуг
+          </div>
         `;
-      sidebar.appendChild(categoryDiv);
-    });
+    return;
   }
 
-  /**
-   * Отрисовывает список услуг конкретной категории в контейнере `servicesContainer`.
-   * Если категория пуста или не существует, выводит заглушку с текстом.
-   */
-  function renderServices(categoryIndex) {
-    const category = servicesData[categoryIndex];
+  let html = "";
+  category.services.forEach((service) => {
+    const formattedPrice = service.price.toLocaleString("ru-RU") + " ₽";
 
-    if (!category || !category.services || category.services.length === 0) {
-      servicesContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #6B6661; font-size: 16px;">
-              В этой категории пока нет услуг
+    html += `
+          <div class="service-row" data-service="${service.id}">
+            <div class="info">
+              <span class="title">${service.title}</span>
+              <span class="desc">${service.desc}</span>
             </div>
-          `;
-      return;
-    }
-
-    let html = "";
-    category.services.forEach((service) => {
-      const formattedPrice = service.price.toLocaleString("ru-RU") + " ₽";
-
-      html += `
-            <div class="service-row" data-service="${service.id}">
-              <div class="info">
-                <span class="title">${service.title}</span>
-                <span class="desc">${service.desc}</span>
-              </div>
-              <div class="meta">
-                <span class="duration">${service.duration} мин</span>
-                <span class="price">${formattedPrice}</span>
-              </div>
-              <button class="select-btn"><span>Выбрать</span></button>
+            <div class="meta">
+              <span class="duration">${service.duration} мин</span>
+              <span class="price">${formattedPrice}</span>
             </div>
-          `;
+            <button class="select-btn"><span>Выбрать</span></button>
+          </div>
+        `;
+  });
+
+  servicesContainer.innerHTML = html;
+}
+
+/**
+ * Добавляет обработчик клика по категории, который показывает список услуг.
+ */
+function setupCategoryListeners() {
+  const sidebar = document.querySelector(".sidebar");
+  const categoryItems = sidebar.querySelectorAll(".category-item");
+
+  categoryItems.forEach((item, index) => {
+    item.addEventListener("click", function () {
+      categoryItems.forEach((cat) => cat.classList.remove("active"));
+      item.classList.add("active");
+      renderServices(index);
     });
+  });
+}
 
-    servicesContainer.innerHTML = html;
-  }
+/**
+ * Инициализация модуля
+ */
+function init() {
+  renderCategories();
+  renderServices(0);
+  setupCategoryListeners();
+}
 
-  /**
-   * Находит все элементы категорий в боковой панели и вешает на них обработчик клика.
-   * При клике переключает класс `active` и обновляет список услуг.
-   */
-  function setupCategoryListeners() {
-    const categoryItems = sidebar.querySelectorAll(".category-item");
-
-    categoryItems.forEach((item, index) => {
-      item.addEventListener("click", function () {
-        categoryItems.forEach((cat) => cat.classList.remove("active"));
-        item.classList.add("active");
-        renderServices(index);
-      });
-    });
-  }
-
-  /**
-   * Инициализирует модуль: рендерит категории, выводит услуги первой категории
-   * и настраивает слушатели событий.
-   */
-  function init() {
-    renderCategories();
-    renderServices(0);
-    setupCategoryListeners();
-  }
-
+document.addEventListener("DOMContentLoaded", function () {
   init();
 });
