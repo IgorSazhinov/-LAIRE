@@ -221,8 +221,15 @@ function setupCategoryListeners() {
 
   categoryItems.forEach((item, index) => {
     item.addEventListener("click", function () {
-      categoryItems.forEach((cat) => cat.classList.remove("active"));
+      // Убираем выбор со всех категорий
+      categoryItems.forEach((cat) => {
+        cat.classList.remove("active");
+      });
+
+      // Выбираем ту, на которую кликнули
       item.classList.add("active");
+
+      // Отображаем список услуг
       renderServices(index);
     });
   });
