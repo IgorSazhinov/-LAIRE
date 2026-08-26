@@ -4,6 +4,7 @@
  */
 const SERVICES_DATA = [
   {
+    id: 100,
     name: "Стрижки и укладки",
     services: [
       {
@@ -44,6 +45,7 @@ const SERVICES_DATA = [
     ],
   },
   {
+    id: 200,
     name: "Маникюр и педикюр",
     services: [
       {
@@ -84,6 +86,7 @@ const SERVICES_DATA = [
     ],
   },
   {
+    id: 300,
     name: "Брови и ресницы",
     services: [
       {
@@ -117,6 +120,7 @@ const SERVICES_DATA = [
     ],
   },
   {
+    id: 400,
     name: "Спа-процедуры",
     services: [
       {
@@ -159,7 +163,7 @@ function renderCategories() {
   const sidebar = document.querySelector(".sidebar");
 
   SERVICES_DATA.forEach((category, index) => {
-    const categoryDiv = renderCategoryItem(category, index, index === 0);
+    const categoryDiv = renderCategoryItem(category, index === 0);
     sidebar.appendChild(categoryDiv);
   });
 }
@@ -167,12 +171,12 @@ function renderCategories() {
 /**
  * Отрисовка плашки с категорией
  */
-function renderCategoryItem(category, index, isActive) {
+function renderCategoryItem(category, isActive) {
   const activeClass = isActive ? "active" : "";
   const count = category.services.length;
   const categoryDiv = document.createElement("div");
   categoryDiv.className = `category-item ${activeClass}`;
-  categoryDiv.dataset.index = index;
+  categoryDiv.dataset.id = category.id;
   categoryDiv.innerHTML = `
     <span class="cat-name">${category.name}</span>
     <div class="count-badge"><span>${count}</span></div>
@@ -183,12 +187,12 @@ function renderCategoryItem(category, index, isActive) {
 /**
  * Отрисовывает список услуг конкретной категории в servicesContainer.
  * Если категория пуста или не существует, выводит заглушку с текстом.
- * @param {number} categoryIndex Индекс категории в объекте servicesData.
+ * @param {number} categoryId Идентификатор категории в объекте servicesData.
  */
-function renderServices(categoryIndex) {
+function renderServices(categoryId) {
   const servicesContainer = document.getElementById("servicesContainer");
 
-  const category = SERVICES_DATA[categoryIndex];
+  const category = findCategoryById(categoryId);
 
   if (!category || !category.services || category.services.length === 0) {
     servicesContainer.innerHTML = `
@@ -228,6 +232,20 @@ function renderServiceItem(service) {
 }
 
 /**
+ * Ищет категорию по id
+ */
+function findCategoryById(id) {
+  for (let i = 0; i < SERVICES_DATA.length; i++) {
+    const category = SERVICES_DATA[i];
+    if (category.id === id) {
+      return category;
+    }
+  }
+
+  return null;
+}
+
+/**
  * Добавляет обработчик клика по категории, который показывает список услуг.
  */
 function setupCategoryListeners() {
@@ -241,13 +259,13 @@ function setupCategoryListeners() {
     });
 
     const clickedItem = event.currentTarget;
-    const index = clickedItem.dataset.index;
+    const categoryId = parseInt(clickedItem.dataset.id); // Первый раз пишем без parseInt и отлаживаемся
 
     // Выбираем ту, на которую кликнули
     clickedItem.classList.add("active");
 
     // Отображаем список услуг
-    renderServices(index);
+    renderServices(categoryId);
   }
 
   categoryItems.forEach((item) => {
@@ -260,7 +278,7 @@ function setupCategoryListeners() {
  */
 function init() {
   renderCategories();
-  renderServices(0);
+  renderServices(100);
   setupCategoryListeners();
 }
 
