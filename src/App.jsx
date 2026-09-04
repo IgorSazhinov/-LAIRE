@@ -47,6 +47,7 @@ const servicesData = [
         price: 5800,
       },
     ],
+    servicesCount: 5,
   },
   {
     id: 200,
@@ -86,8 +87,9 @@ const servicesData = [
         desc: "Идеальная чистота линий, сертифицированные премиум препараты.",
         duration: 90,
         price: 7800,
-      },
+      },      
     ],
+    servicesCount: 5,
   },
   {
     id: 300,
@@ -122,6 +124,7 @@ const servicesData = [
         price: 2800,
       },
     ],
+    servicesCount: 4,
   },
   {
     id: 400,
@@ -156,6 +159,7 @@ const servicesData = [
         price: 4500,
       },
     ],
+    servicesCount: 4,
   },
 ];
 
