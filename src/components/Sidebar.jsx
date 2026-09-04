@@ -5,7 +5,7 @@ import CategoryItem from './CategoryItem'
  */
 export default function Sidebar({
   categories,
-  currentCategoryId,
+  activeCategoryId,
   onCategoryClick,
 }) {
   return (
@@ -18,7 +18,7 @@ export default function Sidebar({
         <CategoryItem
           key={category.id}
           category={category}
-          isActive={category.id === currentCategoryId}
+          isActive={category.id === activeCategoryId}
           onClick={() => onCategoryClick(category.id)}
         />
       ))}
