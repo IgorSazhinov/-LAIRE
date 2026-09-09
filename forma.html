@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Подтверждение записи — ÉLAIRE</title>
     <link rel="stylesheet" href="forma.css" />
+    <link rel="stylesheet" href="modal.css" />
   </head>
   <body>
     <div class="page">
@@ -87,7 +88,7 @@
           <!-- contact-form -->
           <form
             class="contact-form"
-            onsubmit="event.preventDefault(); alert('Запись подтверждена!');"
+            onsubmit="event.preventDefault(); document.getElementById('confirmationModal').showModal();"
           >
             <span class="form-title">Контактные данные</span>
 
@@ -123,6 +124,46 @@
           </form>
         </div>
       </main>
+
+      <dialog id="confirmationModal" class="confirmation-modal">
+        <div class="modal-content">
+          <div class="title-block">
+            <div class="check-icon">✓</div>
+            <span class="modal-title">Запись подтверждена</span>
+          </div>
+
+          <div class="details">
+            <div class="row">
+              <span class="label">Услуга</span>
+              <span class="value">Японский маникюр P.Shine</span>
+            </div>
+            <div class="row">
+              <span class="label">Дата и время</span>
+              <span class="value">17 октября 2026, 12:00</span>
+            </div>
+            <div class="row">
+              <span class="label">Мастер</span>
+              <span class="value">Алиса Розен</span>
+            </div>
+            <div class="row">
+              <span class="label">Длительность</span>
+              <span class="value">50 мин</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="total">
+              <span class="total-label">К оплате</span>
+              <span class="total-price">3 200 ₽</span>
+            </div>
+          </div>
+
+          <button
+            class="modal-next-btn"
+            onclick="document.getElementById('confirmationModal').close();"
+          >
+            Отлично!
+          </button>
+        </div>
+      </dialog>
 
       <!-- footer -->
       <footer class="footer">
