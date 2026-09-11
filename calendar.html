@@ -28,7 +28,12 @@
         <!-- header-row -->
         <div class="header-row">
           <div class="title-with-back">
-            <button class="back-button" onclick="window.location.href='index.html'">←</button>
+            <button
+              class="back-button"
+              onclick="window.location.href='index.html'"
+            >
+              ←
+            </button>
             <span class="page-title">Выбор даты и времени</span>
           </div>
           <div class="step-indicator">
@@ -54,7 +59,7 @@
           <!-- calendar-box -->
           <div class="calendar-box">
             <div class="calendar-header">
-              <span class="month-year">Октябрь 2026</span>
+              <span class="month-year"></span>
               <div class="calendar-nav">
                 <button>‹</button>
                 <button>›</button>
@@ -65,78 +70,14 @@
                 <span>Пн</span><span>Вт</span><span>Ср</span> <span>Чт</span
                 ><span>Пт</span><span>Сб</span><span>Вс</span>
               </div>
-              <div class="grid-days">
-                <!-- неделя 1 -->
-                <div class="week-row">
-                  <div class="day-cell other-month">28</div>
-                  <div class="day-cell other-month">29</div>
-                  <div class="day-cell other-month">30</div>
-                  <div class="day-cell">1</div>
-                  <div class="day-cell">2</div>
-                  <div class="day-cell">3</div>
-                  <div class="day-cell">4</div>
-                </div>
-                <!-- неделя 2 -->
-                <div class="week-row">
-                  <div class="day-cell">5</div>
-                  <div class="day-cell">6</div>
-                  <div class="day-cell">7</div>
-                  <div class="day-cell">8</div>
-                  <div class="day-cell">9</div>
-                  <div class="day-cell">10</div>
-                  <div class="day-cell">11</div>
-                </div>
-                <!-- неделя 3 -->
-                <div class="week-row">
-                  <div class="day-cell">12</div>
-                  <div class="day-cell">13</div>
-                  <div class="day-cell">14</div>
-                  <div class="day-cell">15</div>
-                  <div class="day-cell today">16</div>
-                  <div class="day-cell selected">17</div>
-                  <div class="day-cell">18</div>
-                </div>
-                <!-- неделя 4 -->
-                <div class="week-row">
-                  <div class="day-cell">19</div>
-                  <div class="day-cell">20</div>
-                  <div class="day-cell">21</div>
-                  <div class="day-cell">22</div>
-                  <div class="day-cell">23</div>
-                  <div class="day-cell">24</div>
-                  <div class="day-cell">25</div>
-                </div>
-                <!-- неделя 5 -->
-                <div class="week-row">
-                  <div class="day-cell">26</div>
-                  <div class="day-cell">27</div>
-                  <div class="day-cell">28</div>
-                  <div class="day-cell">29</div>
-                  <div class="day-cell">30</div>
-                  <div class="day-cell">31</div>
-                  <div class="day-cell other-month">1</div>
-                </div>
-              </div>
+              <div class="grid-days"></div>
             </div>
           </div>
 
           <!-- time-box -->
           <div class="time-box">
             <span class="time-title">Доступное время</span>
-            <div class="time-grid">
-              <button class="time-slot">10:00</button>
-              <button class="time-slot">10:30</button>
-              <button class="time-slot unavailable">11:00</button>
-              <button class="time-slot">11:30</button>
-              <button class="time-slot selected">12:00</button>
-              <button class="time-slot">13:00</button>
-              <button class="time-slot">14:30</button>
-              <button class="time-slot">15:00</button>
-              <button class="time-slot unavailable">16:00</button>
-              <button class="time-slot">17:30</button>
-              <button class="time-slot">18:00</button>
-              <button class="time-slot">19:30</button>
-            </div>
+            <div class="time-grid"></div>
           </div>
         </div>
 
@@ -144,9 +85,11 @@
         <div class="bottom-bar">
           <div class="selected-info">
             <span class="label">Выбранная дата и время:</span>
-            <span class="value">Пятница, 17 октября 2026 • 12:00</span>
+            <span class="value"></span>
           </div>
-          <button class="next-btn" onclick="window.location.href='forma.html'">Далее</button>
+          <button class="next-btn" onclick="window.location.href='forma.html'">
+            Далее
+          </button>
         </div>
       </main>
 
@@ -186,5 +129,6 @@
         </div>
       </footer>
     </div>
+    <script src="calendar.js"></script>
   </body>
 </html>
