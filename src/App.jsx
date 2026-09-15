@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {fetchCategories, fetchServicesByCategory} from './api';
+import {fetchCategories} from './api';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
@@ -10,8 +10,6 @@ function App() {
   const [activeCategoryId, setActiveCategoryId] = useState(null);
 
   const [categories, setCategories] = useState([]);
-  const [services, setServices] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -33,24 +31,8 @@ function App() {
     }
   };
 
-  // Загрузка услуг по категории
-  async function loadServices(categoryId) {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchServicesByCategory(categoryId);
-      setServices(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   function handleCategoryClick(categoryId) {
     setActiveCategoryId(categoryId);
-    loadServices(categoryId);
   };
 
   useEffect(() => {
@@ -103,7 +85,7 @@ function App() {
         
         <section className="services-list">
           <StepIndicator />
-          <ServicesList services={services} loading={loading} />
+          <ServicesList activeCategoryId={activeCategoryId} />
         </section>
       </main>
       
